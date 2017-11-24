@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { createPost } from '../actions';
 
 class PostsNew extends Component {
   renderField(field) {
@@ -22,9 +24,19 @@ class PostsNew extends Component {
     );
   }
 
+  /* User submits formReducer ->
+    Validate formReducer ->
+    Call 'onSubmit' ->
+    Call an action to make API request ->
+    Wait ->
+    After success, programmatically navigate the user to post list */
+
   // Callback function to take the values and post data to the http://reduxblog.herokuapp.com/api/posts
   onSubmit(values) {
     // console.log(values); --> {title: "Chicken Recipe", categories: "Food", content: "How to cook a chicken"}
+    this.props.createPost(values, () => {
+      this.props.history.push('/'); // Go back to the root
+    });
   }
 
   render() {
@@ -76,4 +88,6 @@ function validate(values) {
 export default reduxForm({
   validate: validate, // Validation of the form
   form: "PostsNewForm" // a unique name for the form
-})(PostsNew);
+})(
+  connect(null, { createPost })(PostsNew)
+);
