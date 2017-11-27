@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { fetchPost } from '../actions';
 
 class PostShow extends Component {
   componentDidMount() {
-    const { id } = this.props.match.params; // this.props.match.params.id, get the id from the url
-    this.props.fetchPost(id);
+    if(!this.props.post) { // If there's no post then fetch post
+      const { id } = this.props.match.params; // this.props.match.params.id, get the id from the url
+      this.props.fetchPost(id);
+    }
   }
 
   // posts[this.props.match.params.id]; // the post we want to show
@@ -18,6 +21,7 @@ class PostShow extends Component {
 
     return (
       <div>
+        <Link to="/">Back to Index</Link>
         <h3>{post.title}</h3>
         <h6>Categories: {post.categories}</h6>
         <p>{post.content}</p>

@@ -21,7 +21,7 @@ export function fetchPost(id) {
 
   return {
     type: FETCH_POST,
-    palyload: request
+    payload: request
   };
 }
 
