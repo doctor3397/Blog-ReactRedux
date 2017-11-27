@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { FETCH_POST, FETCH_POSTS } from '../actions';
+import { FETCH_POST, FETCH_POSTS, DELETE_POST } from '../actions';
 
 export default function(state={}, action) {
   switch (action.type) {
@@ -26,6 +26,9 @@ export default function(state={}, action) {
       //   }
       // ]
       return _.mapKeys(action.payload.data, 'id');// { 4: post4, 10: post10, ...}
+
+    case DELETE_POST:
+      return _.omit(state, action.payload); // Remove the key from the state object
     default:
       return state;
   }
