@@ -12,7 +12,7 @@ class PostShow extends Component {
   }
 
   onDeleteClick() {
-    const {id } = this.props.match.params;
+    const { id } = this.props.match.params;
 
     // Wait for the post to get deleted then navigate the user back to the index page
     this.props.deletePost(id, () => { // bad approach to use this.props.post.id

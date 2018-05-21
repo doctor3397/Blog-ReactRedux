@@ -15,7 +15,10 @@ class PostsNew extends Component {
         <input
           className="form-control"
           type="text"
-          {...field.input}
+          {...field.input}  // so we don't have to wire up eventhandlers and props
+          // onChange={field.input.onChange}
+          // onFocus={field.input.onFocus}
+          // onBlur={field.input.onBlur}
         />
         <div className="text-help">
           {field.meta.touched ? field.meta.error : ''}
@@ -39,8 +42,9 @@ class PostsNew extends Component {
     });
   }
 
+  // reduxForm handles the state and validation of the form, doesn't handles how components are rendered, or POST form data
   render() {
-    const { handleSubmit } = this.props; // reduxForm function to validate the form
+    const { handleSubmit } = this.props; // reduxForm function
 
     return (
       <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -72,8 +76,8 @@ function validate(values) {
   const errors = {};
 
   // Validate the inputs from 'values'
-  if (!values.title) {
-    errors.title = "Enter a title";
+  if (!values.title || values.title.length < 3) {
+    errors.title = "Enter a title that is at least 3 characters";
   }
   if (!values.categories) {
     errors.categories = "Enter some categories";
@@ -82,11 +86,13 @@ function validate(values) {
     errors.content = "Enter a title";
   }
 
+  // If errors is empty, the form is fine to submit
+  // If errors has *any* properties, redux form assumes form is invalid
   return errors;
 }
 
 export default reduxForm({
-  validate: validate, // Validation of the form
+  validate: validate, // Validation of the form, validate function was called automatically when user submits the form
   form: "PostsNewForm" // a unique name for the form
 })(
   connect(null, { createPost })(PostsNew)

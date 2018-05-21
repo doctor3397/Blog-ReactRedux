@@ -12,7 +12,7 @@ class PostsIndex extends Component {
   }
 
   renderPosts() {
-    return _.map(this.props.posts, post => {
+    return _.map(this.props.posts, post => {  // can't use this.props.posts.map because it's an Object not and an Array
       return (
         <li className="list-group-item" key={post.id} >
           <Link to={`/posts/${post.id}`}>
@@ -24,6 +24,7 @@ class PostsIndex extends Component {
   }
 
   render() {
+    // console.log(this.props.posts);
     return (
       <div>
         <div className="text-xs-right" >

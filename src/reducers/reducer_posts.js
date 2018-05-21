@@ -8,24 +8,16 @@ export default function(state={}, action) {
       // const newState = {...state};
       // newState[post.id] = post;
       // return newState;
-      // console.log(action);
-      return { ...state, [action.payload.data.id]: action.payload.data };
+      // console.log({ ...state, [action.payload.data.id]: action.payload.data });
+      return { ...state, [action.payload.data.id]: action.payload.data }; // take the posts we already fetched
     case FETCH_POSTS:
       // console.log(action.payload.data);
       // [
-      //   { id: 1,
-      //     title: 'Hi!',
-      //     categories: 'Computer, Friends',
-      //     content: 'Post about Friends'
-      //   },
-      //   {
-      //     id: 2,
-      //     title: 'New Post',
-      //     categories: 'Candy',
-      //     content: 'Post about Candy'
-      //   }
+      //   { id: 4, title: 'Hi!},
+      //   { id: 25, title: 'Bye'},
+      //   { id: 36, title: 'Hows it going'}
       // ]
-      return _.mapKeys(action.payload.data, 'id');// { 4: post4, 10: post10, ...}
+      return _.mapKeys(action.payload.data, 'id');// { "4": {"id": "4", "title": "Hi!"}, "25": { "id": "25", "title": "Bye"}, ...}
 
     case DELETE_POST:
       return _.omit(state, action.payload); // Remove the key from the state object
